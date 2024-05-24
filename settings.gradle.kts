@@ -21,3 +21,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "News Sample"
 include(":app")
+include(":core")
+include(":news_list")
+include(":news_details")
+include(":news_api")
