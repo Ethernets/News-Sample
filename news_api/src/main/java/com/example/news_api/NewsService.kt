@@ -6,12 +6,17 @@ import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface NewsService {
 
-    @GET("/v2/everything")
-    suspend fun everything(): News
+    @GET("v2/everything?q=ukraine")
+    suspend fun everything(@Query("language") language: String): News
 }
+
+//val json = Json {
+//    ignoreUnknownKeys = true
+//}
 
 fun NewsService(apiKey: String): NewsService {
     val okHttpClient = OkHttpClient.Builder()
@@ -23,7 +28,7 @@ fun NewsService(apiKey: String): NewsService {
         .build()
 
     val retrofit = Retrofit.Builder()
-        .baseUrl("https://newsapi.org")
+        .baseUrl("https://newsapi.org/")
         .client(okHttpClient)
         .addConverterFactory(Json.asConverterFactory(MediaType.parse("application/json")!!))
         .build()

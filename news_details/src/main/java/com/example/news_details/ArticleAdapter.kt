@@ -7,12 +7,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.example.news_api.Article
 import com.example.news_details.databinding.FragmentArticlesBinding
+import com.example.news_details.databinding.ItemArticleBinding
 
 class ArticleAdapter: ListAdapter<Article, ArticleAdapter.ViewHolder>(ArticleDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            FragmentArticlesBinding.inflate(
+            ItemArticleBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -24,9 +25,11 @@ class ArticleAdapter: ListAdapter<Article, ArticleAdapter.ViewHolder>(ArticleDif
         holder.bind(getItem(position))
     }
 
-    inner class ViewHolder(binding: FragmentArticlesBinding) :
+    inner class ViewHolder(private val binding: ItemArticleBinding) :
         RecyclerView.ViewHolder(binding.root) {
             fun bind(article: Article) {
+                binding.content.text = article.content
+                binding.title.text = article.title
             }
     }
 }
@@ -38,6 +41,6 @@ private class ArticleDiffCallback : DiffUtil.ItemCallback<Article>() {
     }
 
     override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {
-        return oldItem.title == newItem.title
+        return oldItem == newItem
     }
 }

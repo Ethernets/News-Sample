@@ -2,6 +2,7 @@ package com.example.newssample.di
 
 import android.app.Application
 import com.example.news_api.NewsService
+import com.example.news_details.di.NewsDetailsDeps
 import dagger.BindsInstance
 import dagger.Component
 import dagger.Module
@@ -12,7 +13,9 @@ import javax.inject.Singleton
 
 @Component(modules = [AppModule::class])
 @AppScope
-interface AppComponent {
+interface AppComponent: NewsDetailsDeps {
+
+    override val newsService: NewsService
     @Component.Builder
     interface Builder{
         @BindsInstance
